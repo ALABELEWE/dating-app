@@ -8,14 +8,12 @@ namespace DatingApp.Controllers;
 
 [Route("/api/members")]
 [ApiController]
-public class MembersController : ControllerBase
+public class MembersController : BaseApiController
 {
-    private readonly ILogger<UsersController> _logger;
     private readonly AppDbContext _context;
     
-    public MembersController(AppDbContext context, ILogger<UsersController> logger)
+    public MembersController(AppDbContext context)
     {
-        _logger = logger;
         _context = context;
     }
 
