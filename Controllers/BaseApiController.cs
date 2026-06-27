@@ -2,7 +2,7 @@
 
 namespace DatingApp.Controllers;
 
-[Route("/api/members")]
+[Route("/api/[controller]")]
 [ApiController]
 public class BaseApiController : ControllerBase
 {

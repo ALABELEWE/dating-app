@@ -1,33 +1,26 @@
 ﻿using DatingApp.Data;
 using DatingApp.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Controllers;
 
 
-[Route("/api/members")]
-[ApiController]
-public class MembersController : BaseApiController
+public class MembersController(AppDbContext context) : BaseApiController
 {
-    private readonly AppDbContext _context;
-    
-    public MembersController(AppDbContext context)
-    {
-        _context = context;
-    }
-
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<AppUser>>> GetMembers()
     {
-        var members = await _context.Users.ToListAsync();
+        var members = await context.Users.ToListAsync();
         return members;
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<AppUser>> GetMember(string id)
     {
-        var member = await _context.Users.FindAsync(id);
+        var member = await context.Users.FindAsync(id);
         if (member == null) return NotFound();
         return member;
     }
